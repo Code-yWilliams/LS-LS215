@@ -10,8 +10,7 @@
 // (e.g., case, punctuation, tabs, spaces, etc.).
 
 function orderedWordCountsAndSentences(text) {
-  text = text.replaceAll(/[!?]/g, '.');
-  let sentences = text.split(/\.\s?/).filter(sentence => {
+  let sentences = text.split(/[.!?]\s?/).filter(sentence => {
     return (sentence !== '') && (/[a-zA-Z]/.test(sentence[0]));
   });
   sentences = sentences.map(sentence => {
