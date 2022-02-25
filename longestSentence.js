@@ -9,33 +9,28 @@
 // strings. As such, every detail about the string matters
 // (e.g., case, punctuation, tabs, spaces, etc.).
 
-function orderedWordCountsAndSentences(text) {
-  let sentences = text.split(/[.!?]\s?/).filter(sentence => {
-    return (sentence !== '') && (/[a-zA-Z]/.test(sentence[0]));
-  });
-  sentences = sentences.map(sentence => {
-    let words = sentence.match(/[\S]+/g);
-    let wordCount = words.length;
-    return [wordCount, sentence];
-  });
-  return sentences.sort((sentence1, sentence2) => sentence2[0] - sentence1[0]);
-}
-
-function determineOriginalPunctuation(sentence, text) {
-  let regex = new RegExp(`${sentence}[.?!]+`, 'g');
-  let originalSentence = text.match(regex)[0];
-  return originalSentence[originalSentence.length - 1];
+function longestWordCountAndSentence(text) {
+  let sentences = text.match(/\w[^.!?]*[.!?]+/g)
+                      .map(sentence => {
+                        let wordCount = sentence.match(/[\S]+/g).length;
+                        return {wordCount, sentence};
+                      })
+                      .sort((sentence1, sentence2) => {
+                        return sentence2.wordCount - sentence1.wordCount;
+                      });
+  return sentences[0];
 }
 
 function longestSentence(text) {
-  let longest = orderedWordCountsAndSentences(text)[0];
-  let wordCount = longest[0];
-  let longestSentence = longest[1];
-  longestSentence += determineOriginalPunctuation(longestSentence, text);
-  console.log(`${longestSentence}\n`);
-  console.log(`The longest sentence has ${wordCount} words.`);
-}
+  let longest = longestWordCountAndSentence(text);
+  let sentence = longest.sentence;
+  let wordCount = longest.wordCount;
 
+  console.log(`${sentence}\n`);
+  word = wordCount === 1 ? 'word' : 'words';
+  console.log(`The longest sentence has ${wordCount} ${word}.`);
+}
+ 
 let longText = 'Four score and seven years ago our fathers brought forth' +
   ' on this continent a new nation, conceived in liberty, and' +
   ' dedicated to the proposition that all men are created' +
