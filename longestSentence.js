@@ -27,7 +27,7 @@ function longestSentence(text) {
   let wordCount = longest.wordCount;
 
   console.log(`${sentence}\n`);
-  word = wordCount === 1 ? 'word' : 'words';
+  let word = wordCount === 1 ? 'word' : 'words';
   console.log(`The longest sentence has ${wordCount} ${word}.`);
 }
  
